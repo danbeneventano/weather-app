@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Weather</string>
+
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+
+    <string-array name="days">
+        <item>@string/sunday</item>
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thursday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+    </string-array>
+
+    <string name="day">%s</string>
+    <string name="temp_unit">°%s</string>
+    <string name="humidity">%s</string>
+    <string name="chance_of_rain">%s</string>
+    <string name="wind_speed">%d </string>
+    <string name="wind_unit"> %s</string>
+    <string name="date">%s</string>
+    <string name="location">%s</string>
+    <string name="weather_description">%s</string>
+    <string name="feels_like">Feels like: %d°</string>
+    <string name="description">%s</string>
+
+    <string name="mph">mph</string>
+    <string name="kmph">km/h</string>
+    <string name="celsius">C</string>
+    <string name="fahrenheit">F</string>
+    <string name="temperature">%d</string>
+
+</resources>

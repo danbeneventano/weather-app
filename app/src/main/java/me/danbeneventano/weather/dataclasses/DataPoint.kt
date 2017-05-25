@@ -1,0 +1,31 @@
+package me.danbeneventano.weather.dataclasses
+
+data class DataPoint(
+        val apparentTemperatureMinTime: Int? = null,
+        val apparentTemperature: Double? = null,
+        val temperatureMax: Double? = null,
+        val temperature: Double? = null,
+        val icon: String? = null,
+        val precipIntensityMax: Double? = null,
+        val windBearing: Int? = null,
+        val ozone: Double? = null,
+        val temperatureMaxTime: Int? = null,
+        val apparentTemperatureMin: Double? = null,
+        val sunsetTime: Long? = null,
+        val humidity: Double? = null,
+        val moonPhase: Double? = null,
+        val windSpeed: Double? = null,
+        val sunriseTime: Long? = null,
+        val summary: String? = null,
+        val precipProbability: Double? = null,
+        val visibility: Double? = null,
+        val precipIntensity: Double? = null,
+        val cloudCover: Double? = null,
+        val temperatureMin: Double? = null,
+        val pressure: Double? = null,
+        val dewPoint: Double? = null,
+        val temperatureMinTime: Int? = null,
+        val apparentTemperatureMax: Double? = null,
+        val time: Long,
+        val apparentTemperatureMaxTime: Int? = null
+)
