@@ -1,7 +1,7 @@
 package me.danbeneventano.weather.dataclasses
 
 data class WeatherResponse(
-        val offset: Int? = null,
+        val offset: Double? = null,
         val currently: DataPoint,
         val timezone: String,
         val latitude: Double,

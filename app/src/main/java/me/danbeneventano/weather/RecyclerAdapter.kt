@@ -45,7 +45,11 @@ class RecyclerAdapter(var daily: DataBlock, val ctx: Context,
             exact_date.text = ctx.getString(R.string.date, neatFormat.format(date))
             humidity.text = ctx.getString(R.string.humidity, dataPoint.humidity?.toPercentageString())
             chance_of_rain.text = ctx.getString(R.string.chance_of_rain, dataPoint.precipProbability?.toPercentageString())
-            location.text = ctx.getString(R.string.location, "${address?.locality}, ${address?.adminArea}")
+            if(address?.locality != null) {
+                location.text = ctx.getString(R.string.location, "${address?.locality}, ${address?.adminArea}")
+            } else {
+                location.text = ctx.getString(R.string.location, "${address?.adminArea}")
+            }
             weather_icon.setImageDrawable(getIconFromString(dataPoint.icon!!))
             setCardColors(getColorFromDay(date), this)
         }
