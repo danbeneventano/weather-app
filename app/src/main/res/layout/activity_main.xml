@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="me.danbeneventano.weather.MainActivity">
+    tools:context="me.danbeneventano.weather.MainActivity"
+    android:id="@+id/main_linear_layout">
 
     <Toolbar
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:titleTextColor="@color/colorTextWhite">
 
     </Toolbar>
 

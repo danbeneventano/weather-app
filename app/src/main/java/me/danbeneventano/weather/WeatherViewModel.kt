@@ -23,7 +23,7 @@ class WeatherViewModel : ViewModel() {
     private val application: Application by injector.instance()
     private val weatherRepository: WeatherRepository by injector.instance()
     private val locationManager: LocationManager by injector.instance()
-    private val geocoder: Geocoder by injector.instance()
+    val geocoder: Geocoder by injector.instance()
 
     lateinit var weather: LiveData<WeatherResponse>
     private lateinit var locationInfo: LocationInfo
@@ -66,6 +66,16 @@ class WeatherViewModel : ViewModel() {
             }
         }
         return bestLocation
+    }
+
+    fun changeLocation(locationString: String) {
+        val address = geocoder.getFromLocationName(locationString, 1).firstOrNull()
+        if (address != null) {
+            val lat = address.latitude
+            val long = address.longitude
+            locationInfo = LocationInfo(lat, long, address)
+            (location as MutableLiveData<LocationInfo>).value = locationInfo
+        }
     }
 }
 

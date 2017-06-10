@@ -1,27 +1,36 @@
 package me.danbeneventano.weather
 
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
+import android.app.DialogFragment
 import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Address
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Menu
-import android.view.View
-import android.widget.Toast
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_location.*
 import me.danbeneventano.weather.dataclasses.WeatherRequest
 
 class MainActivity : LifecycleActivity() {
 
-    private lateinit var viewModel: WeatherViewModel
+    lateinit var viewModel: WeatherViewModel
     private lateinit var adapter: RecyclerAdapter
     private lateinit var address: Address
     private lateinit var cm: ConnectivityManager
@@ -33,13 +42,35 @@ class MainActivity : LifecycleActivity() {
         cm = appKodein().instance()
         setActionBar(toolbar)
         swipe_refresh_layout.setOnRefreshListener(this::refresh)
-        refresh()
+
+        if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        } else {
+            refresh()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            1 -> {
+                refresh()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.search_location -> {
+            LocationDialog(this).show(fragmentManager, "Search Location")
+            (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(location_edittext, InputMethodManager.SHOW_IMPLICIT)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun initializeRecycler() {
@@ -74,7 +105,7 @@ class MainActivity : LifecycleActivity() {
         isRecyclerInitialized = true
     }
 
-    private fun refresh() {
+    fun refresh() {
         if (hasConnection()) {
             if (!isRecyclerInitialized) {
                 initializeRecycler()
@@ -104,7 +135,7 @@ class MainActivity : LifecycleActivity() {
         progress_bar.visibility = View.VISIBLE
         recycler.visibility = View.GONE
         swipe_refresh_layout.isRefreshing = false
-        Toast.makeText(this, "No Connection", Toast.LENGTH_LONG).show()
+        Snackbar.make(main_linear_layout, "No Connection", Snackbar.LENGTH_LONG).show()
     }
 }
 
